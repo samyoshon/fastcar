@@ -1,0 +1,17 @@
+<% @makes.each do |make| %>
+	<%= make %>
+<% end %>
+
+<% @proposals.each do |proposal| %>
+	<%= proposal.id %>
+	<% if current_user.present? && current_user.dealership_id? %>
+		<%= link_to "Respond", new_response_path(id: proposal.id) %>
+	<% elsif current_user.present? %>
+		<% @responses.each do |response| %>
+			<% if response.proposal_id == proposal.id %>
+				<li><%= response.proposal_id %><%= response.exterior_color %><%= proposal.id %></li>
+			<% end %>
+		<% end %>
+	<% end %>
+<% end %>
+

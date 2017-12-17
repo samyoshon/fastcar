@@ -1,0 +1,8 @@
+<%= form_for(@proposal, :html => {:multipart => true})  do |f| %>
+  <div class="form-group">
+    <div>
+      <%= f.text_field :make, autofocus: true, placeholder: "Make", class: "form-control", required: true %>
+    </div>
+  </div>
+  <%= f.submit "Post Request" %>
+<% end %>

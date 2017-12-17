@@ -1,0 +1,8 @@
+<% @responses.each do |response| %>
+	<%= response.id %>
+	<% if current_user.present? && current_user.dealership_id? %>
+		<%= link_to "Respond", new_response_path(id: proposal.id) %>
+	<% elsif current_user.present? %>
+		
+	<% end %>
+<% end %>
