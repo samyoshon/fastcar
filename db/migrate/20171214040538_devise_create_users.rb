@@ -1,5 +1,5 @@
 class DeviseCreateUsers < ActiveRecord::Migration[5.1]
-def change    
+  def change    
     create_table :dealerships do |t| 
       t.string :name
       t.string :address
@@ -8,6 +8,30 @@ def change
 
     create_table :contact_preference_types do |t| 
       t.string :type
+    end
+
+    create_table :car_years do |t| 
+      t.string :car_year
+    end
+
+    create_table :car_makes do |t| 
+      t.references :car_year, index: true, foreign_key: true
+      t.string :car_make
+    end
+
+    create_table :car_models do |t| 
+      t.references :car_make, index: true, foreign_key: true
+      t.string :car_model
+    end
+
+    create_table :car_trims do |t| 
+      t.references :car_model, index: true, foreign_key: true
+      t.string :car_trim
+    end
+
+    create_table :car_colors do |t| 
+      t.references :car_trim, index: true, foreign_key: true
+      t.string :car_color
     end
 
     create_table :users do |t|
@@ -66,11 +90,12 @@ def change
       t.references :user, index: true, foreign_key: true
       t.references :purchase_type, index: true, foreign_key: true
       t.references :car_quality_type, index: true, foreign_key: true
-      t.string :make
-      t.string :model
-      t.integer :year
-      t.string :exterior_color, array: true, default: []
-      t.string :interior_color, array: true, default: []
+      t.references :car_year, index: true, foreign_key: true
+      t.references :car_make, index: true, foreign_key: true
+      t.references :car_model, index: true, foreign_key: true
+      t.references :car_trim, index: true, foreign_key: true
+      t.references :car_color, index: true, foreign_key: true
+      t.text :add_ons
       t.integer :price
       t.integer :over_under_price
       t.integer :down_payment
@@ -85,9 +110,11 @@ def change
     create_table :responses do |t| 
       t.references :user, index: true, foreign_key: true
       t.references :proposal, index: true, foreign_key: true
-      t.integer :year
-      t.string :exterior_color
-      t.string :interior_color
+      t.references :car_year, index: true, foreign_key: true
+      t.references :car_model, index: true, foreign_key: true
+      t.references :car_trim, index: true, foreign_key: true
+      t.references :car_color, index: true, foreign_key: true
+      t.text :add_ons
       t.integer :price
       t.integer :down_payment
       t.integer :lease_length
@@ -96,7 +123,6 @@ def change
       t.boolean :financing
       t.float :apr
       t.datetime :deadline
-      t.text :add_ons
     end
 
     add_index :users, :email,                unique: true

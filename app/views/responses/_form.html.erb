@@ -1,8 +1,34 @@
 <%= form_for(@response, :html => {:multipart => true})  do |f| %>
   <div class="form-group">
     <div>
-      <%= f.text_field :exterior_color, autofocus: true, placeholder: "Make", class: "form-control", required: true %>
-      <%= f.hidden_field :proposal_id, value: params[:id] %>
+      <%= f.text_field :year, autofocus: true, placeholder: "Year", class: "form-control" %>
+    </div>
+    <div>
+      <%= f.text_field :exterior_color, autofocus: true, placeholder: "Ext. Color", class: "form-control" %>
+    </div>
+    <div>
+      <%= f.text_field :interior_color, autofocus: true, placeholder: "Int. Color", class: "form-control" %>
+    </div>
+    <div>
+      <%= f.text_field :price, autofocus: true, placeholder: "Price", class: "form-control", required: true %>
+    </div>
+    <div>
+      <%= f.text_field :down_payment, autofocus: true, placeholder: "Down Payment", class: "form-control" %>
+    </div>
+    <div>
+      <%= f.text_field :lease_length, autofocus: true, placeholder: "Lease Length", class: "form-control" %>
+    </div>
+    <div>
+      <%= f.text_field :mileage_limit, autofocus: true, placeholder: "Annual Mileage Limit", class: "form-control" %>
+    </div>
+    <div>
+      <%= f.text_field :financing, autofocus: true, placeholder: "Financing", class: "form-control" %>
+    </div>
+    <div>
+      <%= f.text_field :deadline, autofocus: true, placeholder: "Deadline", class: "form-control" %>
+    </div>
+    <div>
+      <%= f.text_field :add_ons, autofocus: true, placeholder: "Add Ons", class: "form-control" %>
     </div>
   </div>
   <%= f.submit "Post Request" %>

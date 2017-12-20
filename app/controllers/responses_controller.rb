@@ -72,6 +72,6 @@ class ResponsesController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def response_params
-      params.require(:response).permit(:user_id, :proposal_id, :year, :exterior_color, :interior_color, :price, :down_payment, :lease_length, :mileage_limit, :closing_cost, :financing, :apr, :deadline, :add_ons)
+      params.require(:response).permit(:user_id, :proposal_id, :car_year_id, :car_make_id, :car_model_id, :car_color_id, :add_ons, :price, :down_payment, :lease_length, :mileage_limit, :closing_cost, :financing, :apr, :deadline)
     end
 end

@@ -1,7 +1,3 @@
-<% @makes.each do |make| %>
-	<%= make %>
-<% end %>
-
 <% @proposals.each do |proposal| %>
 	<%= proposal.id %>
 	<% if current_user.present? && current_user.dealership_id? %>
@@ -9,7 +5,9 @@
 	<% elsif current_user.present? %>
 		<% @responses.each do |response| %>
 			<% if response.proposal_id == proposal.id %>
-				<li><%= response.proposal_id %><%= response.exterior_color %><%= proposal.id %></li>
+				<li><%= response.exterior_color %></li>
+				<li><%= response.user.first_name %><%= response.user.dealership.name %></li>
+				<%= link_to "Leave a Review", new_review_path(id: response.user.id) %>
 			<% end %>
 		<% end %>
 	<% end %>
