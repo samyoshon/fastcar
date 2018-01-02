@@ -1,1 +1,14 @@
-<%= @seller.first_name %>
+<%= @seller.email %>
+
+<h1>HELLOs</h1>
+
+<%= form_for @review, url: create_review_path, method: :put, html: {id: @review.id} do |f| %>
+
+  <div class="form-group container">
+    <div>
+      <%= f.text_field :review, autofocus: true, placeholder: "Review" %>
+    </div>
+    <%= f.hidden_field :buyer_id, :value => Proposal.find(params[:id]).user_id %>
+  </div>
+  <%= f.submit "Post Request" %>
+<% end %>

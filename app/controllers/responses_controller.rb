@@ -17,7 +17,13 @@ class ResponsesController < ApplicationController
 
   # GET /responses/new
   def new
-    @response = Response.new
+    if current_user.present? && current_user.dealership_id?
+      if Proposal.find(params[:id]).car_make_id == current_user.dealership.car_make_id
+        @response = Response.new
+      else
+        redirect_to root_url
+      end
+    end
   end
 
   # GET /responses/1/edit

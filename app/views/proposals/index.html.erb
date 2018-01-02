@@ -1,11 +1,12 @@
 <% @proposals.each do |proposal| %>
 	<%= proposal.id %>
+	<%= proposal.car_make.name %>
+	<%= proposal.car_model.name %>
 	<% if current_user.present? && current_user.dealership_id? %>
 		<%= link_to "Respond", new_response_path(id: proposal.id) %>
 	<% elsif current_user.present? %>
 		<% @responses.each do |response| %>
 			<% if response.proposal_id == proposal.id %>
-				<li><%= response.exterior_color %></li>
 				<li><%= response.user.first_name %><%= response.user.dealership.name %></li>
 				<%= link_to "Leave a Review", new_review_path(id: response.user.id) %>
 			<% end %>

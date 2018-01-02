@@ -1,13 +1,7 @@
 class DeviseCreateUsers < ActiveRecord::Migration[5.1]
   def change    
-    create_table :dealerships do |t| 
-      t.string :name
-      t.string :address
-      t.string :make
-    end     
-
-    create_table :contact_preference_types do |t| 
-      t.string :type
+    create_table :contact_preferences do |t| 
+      t.string :preference
     end
 
     create_table :car_years do |t| 
@@ -35,6 +29,12 @@ class DeviseCreateUsers < ActiveRecord::Migration[5.1]
       t.string :interior_color
     end
 
+    create_table :dealerships do |t| 
+      t.string :name
+      t.references :car_make, index: true, foreign_key: true
+      t.string :address
+    end   
+
     create_table :users do |t|
       ## Database authenticatable
       t.string :first_name
@@ -43,7 +43,7 @@ class DeviseCreateUsers < ActiveRecord::Migration[5.1]
       t.string :image
       t.string :credit_score
       t.references :dealership, index: true, foreign_key: true
-      t.references :contact_preference_type, index: true, foreign_key: true
+      t.references :contact_preference, index: true, foreign_key: true
 
       t.string :email,              null: false, default: ""
       t.string :encrypted_password, null: false, default: ""
@@ -79,18 +79,18 @@ class DeviseCreateUsers < ActiveRecord::Migration[5.1]
       t.timestamps null: false
     end
 
-    create_table :purchase_types do |t| 
-      t.string :type
+    create_table :purchase_options do |t| 
+      t.string :option
     end
 
-    create_table :car_quality_types do |t| 
-      t.string :type
+    create_table :car_qualities do |t| 
+      t.string :quality
     end
 
     create_table :proposals do |t| 
       t.references :user, index: true, foreign_key: true
-      t.references :purchase_type, index: true, foreign_key: true
-      t.references :car_quality_type, index: true, foreign_key: true
+      t.references :purchase_option, index: true, foreign_key: true
+      t.references :car_quality, index: true, foreign_key: true
       t.references :car_year, index: true, foreign_key: true
       t.references :car_make, index: true, foreign_key: true
       t.references :car_model, index: true, foreign_key: true

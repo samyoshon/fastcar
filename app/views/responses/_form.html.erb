@@ -1,13 +1,16 @@
 <%= form_for(@response, :html => {:multipart => true})  do |f| %>
   <div class="form-group">
     <div>
-      <%= f.text_field :year, autofocus: true, placeholder: "Year", class: "form-control" %>
+      <%= Proposal.find(params[:id]).car_model.name %>
     </div>
     <div>
-      <%= f.text_field :exterior_color, autofocus: true, placeholder: "Ext. Color", class: "form-control" %>
+      <%= f.collection_select :car_year_id, CarYear.order(:year), :id, :year, include_blank: true %>
     </div>
     <div>
-      <%= f.text_field :interior_color, autofocus: true, placeholder: "Int. Color", class: "form-control" %>
+      <%= f.text_field :car_trim_id, autofocus: true, placeholder: "Car Trim", class: "form-control" %>
+    </div>
+    <div>
+      <%= f.text_field :car_color_id, autofocus: true, placeholder: "Car Color", class: "form-control" %>
     </div>
     <div>
       <%= f.text_field :price, autofocus: true, placeholder: "Price", class: "form-control", required: true %>
@@ -30,6 +33,7 @@
     <div>
       <%= f.text_field :add_ons, autofocus: true, placeholder: "Add Ons", class: "form-control" %>
     </div>
+    <%= f.hidden_field :proposal_id, :value => params[:id] %>
   </div>
   <%= f.submit "Post Request" %>
 <% end %>
