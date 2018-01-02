@@ -4,21 +4,19 @@
       <%= f.text_field :purchase_type_id, autofocus: true, placeholder: "1", class: "form-control" %>
     </div>
     <div>
-      <%= f.text_field :make, autofocus: true, placeholder: "Make", class: "form-control" %>
-      <%= f.collection_select :make, Proposal.make.order, :id, :name, include_blank: true %>
+      <%= f.collection_select :car_make_id, CarMake.order(:name), :id, :name, include_blank: true %>
     </div>
     <div>
-      <%= f.text_field :model, autofocus: true, placeholder: "Model", class: "form-control" %>
-      <%= f.grouped_collection_select :model, Proposal.model.order, :states, :name, :id, :name, include_blank: true %>
+      <%= f.grouped_collection_select :car_model_id, CarMake.order(:name), :car_models, :name, :id, :name, include_blank: true %>
     </div>
     <div>
-      <%= f.text_field :year, autofocus: true, placeholder: "Year", class: "form-control" %>
+      <%= f.text_field :car_year_id, autofocus: true, placeholder: "Year", class: "form-control" %>
     </div>
     <div>
-      <%= f.text_field :exterior_color, autofocus: true, placeholder: "Ext. Color", class: "form-control" %>
+      <%= f.text_field :car_trim_id, autofocus: true, placeholder: "Ext. Color", class: "form-control" %>
     </div>
     <div>
-      <%= f.text_field :interior_color, autofocus: true, placeholder: "Int. Color", class: "form-control" %>
+      <%= f.text_field :car_color_id, autofocus: true, placeholder: "Int. Color", class: "form-control" %>
     </div>
     <div>
       <%= f.text_field :price, autofocus: true, placeholder: "Price", class: "form-control", required: true %>

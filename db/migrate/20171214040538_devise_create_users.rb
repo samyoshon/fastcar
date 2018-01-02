@@ -11,27 +11,28 @@ class DeviseCreateUsers < ActiveRecord::Migration[5.1]
     end
 
     create_table :car_years do |t| 
-      t.string :car_year
+      t.string :year
     end
 
     create_table :car_makes do |t| 
       t.references :car_year, index: true, foreign_key: true
-      t.string :car_make
+      t.string :name
     end
 
     create_table :car_models do |t| 
       t.references :car_make, index: true, foreign_key: true
-      t.string :car_model
+      t.string :name
     end
 
     create_table :car_trims do |t| 
       t.references :car_model, index: true, foreign_key: true
-      t.string :car_trim
+      t.string :trim
     end
 
     create_table :car_colors do |t| 
       t.references :car_trim, index: true, foreign_key: true
-      t.string :car_color
+      t.string :exterior_color
+      t.string :interior_color
     end
 
     create_table :users do |t|

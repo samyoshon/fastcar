@@ -17,19 +17,20 @@ ActiveRecord::Schema.define(version: 20171217004744) do
 
   create_table "car_colors", force: :cascade do |t|
     t.bigint "car_trim_id"
-    t.string "car_color"
+    t.string "exterior_color"
+    t.string "interior_color"
     t.index ["car_trim_id"], name: "index_car_colors_on_car_trim_id"
   end
 
   create_table "car_makes", force: :cascade do |t|
     t.bigint "car_year_id"
-    t.string "car_make"
+    t.string "name"
     t.index ["car_year_id"], name: "index_car_makes_on_car_year_id"
   end
 
   create_table "car_models", force: :cascade do |t|
     t.bigint "car_make_id"
-    t.string "car_model"
+    t.string "name"
     t.index ["car_make_id"], name: "index_car_models_on_car_make_id"
   end
 
@@ -39,12 +40,12 @@ ActiveRecord::Schema.define(version: 20171217004744) do
 
   create_table "car_trims", force: :cascade do |t|
     t.bigint "car_model_id"
-    t.string "car_trim"
+    t.string "trim"
     t.index ["car_model_id"], name: "index_car_trims_on_car_model_id"
   end
 
   create_table "car_years", force: :cascade do |t|
-    t.string "car_year"
+    t.string "year"
   end
 
   create_table "contact_preference_types", force: :cascade do |t|
