@@ -9,8 +9,8 @@ class User < ApplicationRecord
   belongs_to :dealership, optional: true
   has_many :proposals
   has_many :responses
-  has_many :reviews, :class_name => 'Review', :foreign_key => 'buyer_id'
   has_many :reviews, :class_name => 'Review', :foreign_key => 'seller_id'
+  has_many :reviews, :class_name => 'Review', :foreign_key => 'buyer_id'
   has_many :notifications, as: :recipient
 
   after_commit -> { NotificationRelayJob.perform_later(self) }

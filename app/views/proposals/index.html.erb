@@ -8,7 +8,7 @@
 		<% @responses.each do |response| %>
 			<% if response.proposal_id == proposal.id %>
 				<li><%= response.user.first_name %><%= response.user.dealership.name %></li>
-				<%= link_to "Leave a Review", new_review_path(id: response.user.id) %>
+				<%= link_to "Leave a Review", new_review_path(id: response.id) %>
 			<% end %>
 		<% end %>
 	<% end %>

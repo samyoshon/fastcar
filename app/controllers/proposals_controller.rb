@@ -72,7 +72,7 @@ class ProposalsController < ApplicationController
 
   def reviews
     @review = Review.new
-    @seller = User.find(params[:id])
+    @seller = Response.find(params[:id]).user
   end
 
   def create_reviews
