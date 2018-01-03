@@ -130,11 +130,15 @@ ActiveRecord::Schema.define(version: 20171217004744) do
   create_table "reviews", force: :cascade do |t|
     t.bigint "buyer_id"
     t.bigint "seller_id"
+    t.bigint "proposal_id"
+    t.bigint "response_id"
     t.string "review"
     t.integer "rating"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["buyer_id"], name: "index_reviews_on_buyer_id"
+    t.index ["proposal_id"], name: "index_reviews_on_proposal_id"
+    t.index ["response_id"], name: "index_reviews_on_response_id"
     t.index ["seller_id"], name: "index_reviews_on_seller_id"
   end
 
@@ -194,6 +198,8 @@ ActiveRecord::Schema.define(version: 20171217004744) do
   add_foreign_key "responses", "car_years"
   add_foreign_key "responses", "proposals"
   add_foreign_key "responses", "users"
+  add_foreign_key "reviews", "proposals"
+  add_foreign_key "reviews", "responses"
   add_foreign_key "users", "contact_preferences"
   add_foreign_key "users", "dealerships"
 end

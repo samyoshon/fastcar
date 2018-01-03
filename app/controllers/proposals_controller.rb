@@ -71,12 +71,19 @@ class ProposalsController < ApplicationController
   end
 
   def reviews
-    @review = Review.new
-    @seller = Response.find(params[:id]).user
+    if Response.find(params[:id]).proposal.user_id == current_user.id
+      @review = Review.new
+      @response = Response.find(params[:id])
+      @proposal = Response.find(params[:id]).proposal
+      @seller = Response.find(params[:id]).user
+    else
+      redirect_to root_url
+    end
   end
 
   def create_reviews
     @review = current_user.reviews.build(review_params)
+    @review.buyer_id = current_user.id
 
     if @review.save
       flash[:alert] = "Thanks for your review."
@@ -99,6 +106,6 @@ class ProposalsController < ApplicationController
     end
 
     def review_params
-      params.require(:review).permit(:buyer_id, :seller_id, :review, :rating, :created_at, :updated_at)
+      params.require(:review).permit(:buyer_id, :seller_id, :response_id, :proposal_id, :review, :rating, :created_at, :updated_at)
     end
 end
