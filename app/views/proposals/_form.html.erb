@@ -4,10 +4,13 @@
       <%= f.collection_select :purchase_option_id, PurchaseOption.order(:option), :id, :option, include_blank: true %>
     </div>
     <div>
+      <%= f.collection_select :car_quality_id, CarQuality.order(:quality), :id, :quality, include_blank: true %>
+    </div>
+    <div>
       <%= f.collection_select :car_make_id, CarMake.order(:name), :id, :name, include_blank: true %>
     </div>
     <div>
-      <%= f.grouped_collection_select :car_model_id, CarMake.order(:name), :car_models, :name, :id, :name, include_blank: true %>
+      <%= f.grouped_collection_select :car_model_id, CarModel.order(:name), :car_models, :name, :id, :name, include_blank: true %>
     </div>
     <div>
       <%= f.text_field :car_year_id, autofocus: true, placeholder: "Car Year", class: "form-control" %>

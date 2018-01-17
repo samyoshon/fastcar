@@ -59,6 +59,10 @@ ActiveRecord::Schema.define(version: 20171217004744) do
     t.index ["car_make_id"], name: "index_dealerships_on_car_make_id"
   end
 
+  create_table "industries", force: :cascade do |t|
+    t.string "name"
+  end
+
   create_table "notifications", force: :cascade do |t|
     t.bigint "user_id"
     t.integer "recipient_id"
@@ -106,12 +110,16 @@ ActiveRecord::Schema.define(version: 20171217004744) do
   create_table "responses", force: :cascade do |t|
     t.bigint "user_id"
     t.bigint "proposal_id"
+    t.bigint "purchase_option_id"
+    t.bigint "car_quality_id"
     t.bigint "car_year_id"
+    t.bigint "car_make_id"
     t.bigint "car_model_id"
     t.bigint "car_trim_id"
     t.bigint "car_color_id"
     t.text "add_ons"
     t.integer "price"
+    t.integer "over_under_price"
     t.integer "down_payment"
     t.integer "lease_length"
     t.integer "mileage_limit"
@@ -120,10 +128,13 @@ ActiveRecord::Schema.define(version: 20171217004744) do
     t.float "apr"
     t.datetime "deadline"
     t.index ["car_color_id"], name: "index_responses_on_car_color_id"
+    t.index ["car_make_id"], name: "index_responses_on_car_make_id"
     t.index ["car_model_id"], name: "index_responses_on_car_model_id"
+    t.index ["car_quality_id"], name: "index_responses_on_car_quality_id"
     t.index ["car_trim_id"], name: "index_responses_on_car_trim_id"
     t.index ["car_year_id"], name: "index_responses_on_car_year_id"
     t.index ["proposal_id"], name: "index_responses_on_proposal_id"
+    t.index ["purchase_option_id"], name: "index_responses_on_purchase_option_id"
     t.index ["user_id"], name: "index_responses_on_user_id"
   end
 
@@ -193,10 +204,13 @@ ActiveRecord::Schema.define(version: 20171217004744) do
   add_foreign_key "proposals", "purchase_options"
   add_foreign_key "proposals", "users"
   add_foreign_key "responses", "car_colors"
+  add_foreign_key "responses", "car_makes"
   add_foreign_key "responses", "car_models"
+  add_foreign_key "responses", "car_qualities"
   add_foreign_key "responses", "car_trims"
   add_foreign_key "responses", "car_years"
   add_foreign_key "responses", "proposals"
+  add_foreign_key "responses", "purchase_options"
   add_foreign_key "responses", "users"
   add_foreign_key "reviews", "proposals"
   add_foreign_key "reviews", "responses"

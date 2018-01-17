@@ -1,6 +1,6 @@
 class ProposalsController < ApplicationController
-  before_action :authenticate_user!, except: [:new]
   before_action :set_proposal, only: [:show, :edit, :update, :destroy]
+  before_action :authenticate_user!, only: [:new, :create, :edit, :update]
   
   # GET /proposals
   # GET /proposals.json
@@ -102,7 +102,7 @@ class ProposalsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def proposal_params
-      params.require(:proposal).permit(:user_id, :purchase_type_id, :car_quality_type_id, :car_year_id, :car_make_id, :car_model_id, :car_color_id, :add_ons, :price, :over_under_price, :down_payment, :lease_length, :mileage_limit, :closing_cost, :financing, :apr, :deadline)
+      params.require(:proposal).permit(:user_id, :purchase_option_id, :car_quality_id, :car_year_id, :car_make_id, :car_model_id, :car_trim_id, :car_color_id, :add_ons, :price, :over_under_price, :down_payment, :lease_length, :mileage_limit, :closing_cost, :financing, :apr, :deadline)
     end
 
     def review_params

@@ -1,7 +1,7 @@
 Rails.application.routes.draw do
-  get '/proposals/reviews', to: 'proposals#reviews', as: 'new_review'
-  put '/proposals/reviews', to: 'proposals#create_reviews', as: 'create_review'
-  
+  # get '/proposals/reviews', to: 'proposals#reviews', as: 'new_review'
+  # put '/proposals/reviews', to: 'proposals#create_reviews', as: 'create_review'
+
   resources :responses
   resources :proposals
 

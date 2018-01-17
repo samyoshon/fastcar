@@ -1,8 +1,8 @@
 class CarModel < ApplicationRecord
 	has_many :proposals
 
-	belongs_to :car_year
-	belongs_to :car_make
+	belongs_to :car_year, optional: true
+	belongs_to :car_make, optional: true
 	has_many :car_trims
 	has_many :car_colors
 end

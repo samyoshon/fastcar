@@ -1,5 +1,9 @@
 class DeviseCreateUsers < ActiveRecord::Migration[5.1]
   def change    
+    create_table :industries do |t| 
+      t.string :name
+    end
+
     create_table :contact_preferences do |t| 
       t.string :preference
     end
@@ -74,8 +78,7 @@ class DeviseCreateUsers < ActiveRecord::Migration[5.1]
       t.datetime :locked_at
 
       t.datetime :deleted_at
-
-
+      
       t.timestamps null: false
     end
 
@@ -111,12 +114,16 @@ class DeviseCreateUsers < ActiveRecord::Migration[5.1]
     create_table :responses do |t| 
       t.references :user, index: true, foreign_key: true
       t.references :proposal, index: true, foreign_key: true
+      t.references :purchase_option, index: true, foreign_key: true
+      t.references :car_quality, index: true, foreign_key: true
       t.references :car_year, index: true, foreign_key: true
+      t.references :car_make, index: true, foreign_key: true
       t.references :car_model, index: true, foreign_key: true
       t.references :car_trim, index: true, foreign_key: true
       t.references :car_color, index: true, foreign_key: true
       t.text :add_ons
       t.integer :price
+      t.integer :over_under_price
       t.integer :down_payment
       t.integer :lease_length
       t.integer :mileage_limit
@@ -125,7 +132,7 @@ class DeviseCreateUsers < ActiveRecord::Migration[5.1]
       t.float :apr
       t.datetime :deadline
     end
-
+    
     add_index :users, :email,                unique: true
     add_index :users, :reset_password_token, unique: true
     add_index :users, :confirmation_token,   unique: true
