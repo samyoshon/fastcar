@@ -1,4 +1,5 @@
 class CarModel < ApplicationRecord
+	default_scope { order(:name) } 
 	has_many :proposals
 
 	belongs_to :car_year, optional: true
