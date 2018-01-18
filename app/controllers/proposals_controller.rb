@@ -1,6 +1,6 @@
 class ProposalsController < ApplicationController
-  before_action :set_proposal, only: [:show, :edit, :update, :destroy]
   before_action :authenticate_user!, only: [:new, :create, :edit, :update]
+  before_action :set_proposal, only: [:show, :edit, :update, :destroy]
   
   # GET /proposals
   # GET /proposals.json
@@ -8,10 +8,15 @@ class ProposalsController < ApplicationController
     # @makes = HTTParty.get('https://jsonplaceholder.typicode.com', :headers => {'Content-Type' => 'application/json'})
     # @makes.to_json
     if current_user.present? && current_user.dealership_id?
+      # Dealer sees all proposals for their car make
       @proposals = Proposal.where("car_make_id = ?", current_user.dealership.car_make_id)
       @q = Proposal.where("car_make_id = ?", current_user.dealership.car_make_id).search(params[:q])
+      # Dealer sees all responses s/he made
+      @responses = Response.where("user_id = ?", current_user.id)
     elsif current_user.present?
+      # Customer sees all proposals s/he made
       @proposals = Proposal.where("user_id = ?", current_user.id)
+      # Customer sees all proposals s/he made
       @responses = Response.all
     end
   end

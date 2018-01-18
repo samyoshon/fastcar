@@ -1,6 +1,6 @@
 jQuery(function() {
   var states;
-  // $('#proposal_car_model_id').parent().hide();
+  $('#proposal_car_model_id').parent().hide();
   states = $('#proposal_car_model_id').html();
 
   return $('#proposal_car_make_id').change(function() {

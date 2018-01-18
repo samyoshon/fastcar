@@ -1,5 +1,5 @@
 class ResponsesController < ApplicationController
-  # before_action :authenticate_user!
+  before_action :authenticate_user!, only: [:new, :create, :edit, :update]
   before_action :set_response, only: [:show, :edit, :update, :destroy]
 
   # GET /responses
@@ -7,12 +7,16 @@ class ResponsesController < ApplicationController
   def index
     if current_user.present? && current_user.dealership_id?
       @responses = Response.where("user_id = ?", current_user.id)
+    elsif 
+      redirect_to root_url
     end
   end
 
   # GET /responses/1
   # GET /responses/1.json
   def show
+    @response = Response.find(params[:id])
+    @user = current_user
   end
 
   # GET /responses/new
@@ -67,6 +71,29 @@ class ResponsesController < ApplicationController
     respond_to do |format|
       format.html { redirect_to responses_url, notice: 'Response was successfully destroyed.' }
       format.json { head :no_content }
+    end
+  end
+
+  def reviews
+    if Response.find(params[:id]).proposal.user_id == current_user.id
+      @review = Review.new
+      @response = Response.find(params[:id])
+      @proposal = Response.find(params[:id]).proposal
+      @seller = Response.find(params[:id]).user
+    else
+      redirect_to root_url
+    end
+  end
+
+  def create_reviews
+    @review = current_user.reviews.build(review_params)
+    @review.buyer_id = current_user.id
+
+    if @review.save
+      flash[:alert] = "Thanks for your review."
+      redirect_to root_path
+    else
+      flash[:alert] = "Could not save review."
     end
   end
 

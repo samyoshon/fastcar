@@ -2,15 +2,23 @@
 	<%= proposal.id %>
 	<%= proposal.car_make.name %>
 	<%= proposal.car_model.name %>
+	<!-- What dealers see -->
 	<% if current_user.present? && current_user.dealership_id? %>
-		<%= link_to "Respond", new_response_path(id: proposal.id) %>
-	<% elsif current_user.present? %>
-		<% @responses.each do |response| %>
-			<% if response.proposal_id == proposal.id %>
-				<li><%= response.user.first_name %><%= response.user.dealership.name %></li>
-				<%= link_to "Leave a Review", new_review_path(id: response.id) %>
+		<% if proposal.responses.present? %>
+			<% proposal.responses.each do |response| %>
+				<% if response.proposal_id? && response.proposal_id == proposal.id %>
+					<%= link_to "Review Offer", response_path(id: response.id) %>>
+				<% end %>
 			<% end %>
+		<% else %>
+			<%= link_to "Respond", new_response_path(id: proposal.id) %>
 		<% end %>
+	<!-- What customers see -->
+	<% elsif current_user.present? %>
+			<% if response.proposal_id == proposal.id %>
+				<%= link_to response.user.first_name, response_path(id: response.id) %>
+			<% end %>
 	<% end %>
 <% end %>
+
 
