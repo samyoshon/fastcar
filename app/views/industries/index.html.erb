@@ -1,6 +1,0 @@
-<h1>hello</h1>
-<% @industries.each do |industry| %>
-	<%= industry.id %>
-	<%= industry.name %>
-	<%= link_to "Create Proposal", new_proposal_path(id: industry.id) %>
-<% end %>
