@@ -13,8 +13,10 @@ class ProposalsController < ApplicationController
     # @makes = HTTParty.get('https://jsonplaceholder.typicode.com', :headers => {'Content-Type' => 'application/json'})
     # @makes.to_json
     @q = Proposal.search(params[:q])
+
+    # Dealer sees all proposals for their car make
     if current_user.present? && current_user.dealership_id?
-      # Dealer sees all proposals for their car make
+      @q.sorts = ['car_model_id asc', 'price desc'] if @q.sorts.empty?
       @proposals = Proposal.where("car_make_id = ?", current_user.dealership.car_make_id)
       if params[:q].present?
         # @proposals = @q.result.paginate(page: params[:page], per_page: $pagination_count).where("market_id = ? AND (products.expire_date IS null OR products.expire_date > ?)", @market.id, Time.now)
@@ -23,8 +25,10 @@ class ProposalsController < ApplicationController
       # @q = Proposal.where("car_make_id = ?", current_user.dealership.car_make_id).search(params[:q])
       # Dealer sees all responses s/he made
       @responses = Response.where("user_id = ?", current_user.id)
+
+    # Customer sees all proposals s/he made
     elsif current_user.present?
-      # Customer sees all proposals s/he made
+      @search.sorts = ['car_model_id asc', 'price asc'] if @search.sorts.empty?
       @proposals = Proposal.where("user_id = ?", current_user.id)
       # Proposals by customers' car models
       @proposals_nav = Proposal.where("user_id = ?", current_user.id).uniq { |p| p.car_model_id }
