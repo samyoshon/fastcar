@@ -37,48 +37,49 @@ class DeviseCreateUsers < ActiveRecord::Migration[5.1]
       t.string :name
       t.references :car_make, index: true, foreign_key: true
       t.string :address
+      t.string :city
+      t.string :state
+      t.integer :zipcode
     end   
 
     create_table :users do |t|
-      ## Database authenticatable
+      ## Database authenticatable       
+      t.boolean :admin, default: false
       t.string :first_name
       t.string :last_name
+      t.string :email,              null: false, default: ""
       t.string :phone_number
+      t.string :address
+      t.string :city
+      t.string :state
+      t.integer :zipcode
       t.string :image
       t.string :credit_score
+      t.boolean :is_dealer
       t.references :dealership, index: true, foreign_key: true
       t.references :contact_preference, index: true, foreign_key: true
-
-      t.string :email,              null: false, default: ""
       t.string :encrypted_password, null: false, default: ""
-
       ## Recoverable
       t.string   :reset_password_token
       t.datetime :reset_password_sent_at
-
       ## Rememberable
       t.datetime :remember_created_at
-
       ## Trackable
       t.integer  :sign_in_count, default: 0, null: false
       t.datetime :current_sign_in_at
       t.datetime :last_sign_in_at
       t.inet     :current_sign_in_ip
       t.inet     :last_sign_in_ip
-
       ## Confirmable
       t.string   :confirmation_token
       t.datetime :confirmed_at
       t.datetime :confirmation_sent_at
       t.string   :unconfirmed_email # Only if using reconfirmable
-
       ## Lockable
       t.integer  :failed_attempts, default: 0, null: false # Only if lock strategy is :failed_attempts
       t.string   :unlock_token # Only if unlock strategy is :email or :both
       t.datetime :locked_at
-
       t.datetime :deleted_at
-      
       t.timestamps null: false
     end
 
@@ -92,6 +93,7 @@ class DeviseCreateUsers < ActiveRecord::Migration[5.1]
 
     create_table :proposals do |t| 
       t.references :user, index: true, foreign_key: true
+      t.integer :zipcode
       t.references :purchase_option, index: true, foreign_key: true
       t.references :car_quality, index: true, foreign_key: true
       t.references :car_year, index: true, foreign_key: true
@@ -131,6 +133,8 @@ class DeviseCreateUsers < ActiveRecord::Migration[5.1]
       t.boolean :financing
       t.float :apr
       t.datetime :deadline
+      t.boolean :hidden_by_user
+      t.boolean :hidden_by_dealer
     end
     
     add_index :users, :email,                unique: true
