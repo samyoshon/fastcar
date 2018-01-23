@@ -19,6 +19,19 @@
     <%= f.email_field :email, autofocus: true %>
   </div>
 
+  <div>
+    <%= f.text_field :street, autofocus: true, placeholder: "Street", class: "form-control" %>
+  </div>
+  <div>
+    <%= f.text_field :city, autofocus: true, placeholder: "City", class: "form-control" %>
+  </div>    
+  <div>
+    <%= f.text_field :state, autofocus: true, placeholder: "State", class: "form-control" %>
+  </div>
+  <div>
+    <%= f.text_field :zipcode, autofocus: true, placeholder: "Zipcode", class: "form-control" %>
+  </div>
+
   <% if devise_mapping.confirmable? && resource.pending_reconfirmation? %>
     <div>Currently waiting confirmation for: <%= resource.unconfirmed_email %></div>
   <% end %>

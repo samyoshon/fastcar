@@ -36,10 +36,13 @@ class DeviseCreateUsers < ActiveRecord::Migration[5.1]
     create_table :dealerships do |t| 
       t.string :name
       t.references :car_make, index: true, foreign_key: true
-      t.string :address
+      t.string :street
       t.string :city
       t.string :state
-      t.integer :zipcode
+      t.string :zipcode
+      t.string :country
+      t.float :latitude
+      t.float :longitude
     end   
 
     create_table :users do |t|
@@ -49,10 +52,14 @@ class DeviseCreateUsers < ActiveRecord::Migration[5.1]
       t.string :last_name
       t.string :email,              null: false, default: ""
       t.string :phone_number
-      t.string :address
+      # possible permanent address
+      t.string :street
       t.string :city
       t.string :state
-      t.integer :zipcode
+      t.string :zipcode
+      t.string :country
+      t.float :latitude
+      t.float :longitude
       t.string :image
       t.string :credit_score
       t.boolean :is_dealer
@@ -93,7 +100,6 @@ class DeviseCreateUsers < ActiveRecord::Migration[5.1]
 
     create_table :proposals do |t| 
       t.references :user, index: true, foreign_key: true
-      t.integer :zipcode
       t.references :purchase_option, index: true, foreign_key: true
       t.references :car_quality, index: true, foreign_key: true
       t.references :car_year, index: true, foreign_key: true
@@ -111,6 +117,13 @@ class DeviseCreateUsers < ActiveRecord::Migration[5.1]
       t.boolean :financing
       t.float :apr
       t.datetime :deadline
+      t.string :street
+      t.string :city
+      t.string :state
+      t.string :zipcode
+      t.string :country
+      t.float :latitude
+      t.float :longitude
     end
 
     create_table :responses do |t| 

@@ -17,6 +17,7 @@ class ProposalsController < ApplicationController
     # Dealer sees all proposals for their car make
     if current_user.present? && current_user.dealership_id?
       @q.sorts = ['car_model_id asc', 'price desc'] if @q.sorts.empty?
+      @q.near(address, 20)
       @proposals = Proposal.where("car_make_id = ?", current_user.dealership.car_make_id)
       if params[:q].present?
         # @proposals = @q.result.paginate(page: params[:page], per_page: $pagination_count).where("market_id = ? AND (products.expire_date IS null OR products.expire_date > ?)", @market.id, Time.now)
@@ -28,7 +29,7 @@ class ProposalsController < ApplicationController
 
     # Customer sees all proposals s/he made
     elsif current_user.present?
-      @search.sorts = ['car_model_id asc', 'price asc'] if @search.sorts.empty?
+      @q.sorts = ['car_model_id asc', 'price asc'] if @q.sorts.empty?
       @proposals = Proposal.where("user_id = ?", current_user.id)
       # Proposals by customers' car models
       @proposals_nav = Proposal.where("user_id = ?", current_user.id).uniq { |p| p.car_model_id }
@@ -127,7 +128,7 @@ class ProposalsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def proposal_params
-      params.require(:proposal).permit(:user_id, :purchase_option_id, :car_quality_id, :car_year_id, :car_make_id, :car_model_id, :car_trim_id, :car_color_id, :add_ons, :price, :over_under_price, :down_payment, :lease_length, :mileage_limit, :closing_cost, :financing, :apr, :deadline)
+      params.require(:proposal).permit(:user_id, :purchase_option_id, :car_quality_id, :car_year_id, :car_make_id, :car_model_id, :car_trim_id, :car_color_id, :add_ons, :price, :over_under_price, :down_payment, :lease_length, :mileage_limit, :closing_cost, :financing, :apr, :deadline, :street, :city, :state, :zipcode, :country, :latitude, :longitude)
     end
 
     def review_params

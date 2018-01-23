@@ -13,10 +13,15 @@ class User < ApplicationRecord
   has_many :notifications, as: :recipient
 
   after_commit -> { NotificationRelayJob.perform_later(self) }
-  
-  def self.assign_from_row(row)
-    user = User.where(email: row[:email]).first_or_initialize
-    user.assign_attributes row.to_hash.slice(:email, :password, :password_confirmation, :first_name, :last_name, :image, :phone_number, :credit_score, :dealership_id, :contact_preference_type_id)
+  geocoded_by :address
+  after_validation :geocode, if: :address_changed?
+
+  def address
+    [street, city, zipcode, state].compact.join(", ")
+  end
+
+  def address_changed?
+    street_changed? || city_changed? || zipcode_changed? || state_changed?
   end
 
   def name

@@ -71,6 +71,8 @@ gem 'devise'
 gem 'cancan', '~> 1.6', '>= 1.6.10'
 # for search
 gem 'ransack'
+# for location
+gem 'geocoder'
 # for timestamp
 gem 'local_time'
 # for pagination
@@ -82,5 +84,6 @@ gem 'mini_magick'
 gem 'slim-rails'
 gem 'fog-aws', group: :production
 gem 'httparty'
+
 
 ruby "2.4.2"
