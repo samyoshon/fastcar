@@ -1,5 +1,6 @@
 class CarMake < ApplicationRecord
   	has_many :proposals
+  	has_many :dealership
   	
   	belongs_to :car_year, optional: true
 	has_many :car_models

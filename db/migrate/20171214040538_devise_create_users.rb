@@ -124,6 +124,7 @@ class DeviseCreateUsers < ActiveRecord::Migration[5.1]
       t.string :country
       t.float :latitude
       t.float :longitude
+      t.string :radius_limit
     end
 
     create_table :responses do |t| 
@@ -139,15 +140,42 @@ class DeviseCreateUsers < ActiveRecord::Migration[5.1]
       t.text :add_ons
       t.integer :price
       t.integer :over_under_price
-      t.integer :down_payment
       t.integer :lease_length
       t.integer :mileage_limit
-      t.integer :closing_cost
+      t.integer :first_month_payment
+      t.integer :down_payment
+      t.integer :security_deposit
+      t.integer :registration_and_doc_fee
+      t.integer :sales_tax
+      t.integer :acquisition_fee
+      t.integer :disposition_fee
+      t.integer :other_fee
+      t.integer :due_at_signing
       t.boolean :financing
       t.float :apr
       t.datetime :deadline
       t.boolean :hidden_by_user
       t.boolean :hidden_by_dealer
+    end
+
+    create_table :reviews do |t|
+      t.references :buyer
+      t.references :seller
+      t.references :proposal, index: true, foreign_key: true
+      t.references :response, index: true, foreign_key: true
+      t.string :review
+      t.integer :rating
+      t.timestamps
+    end
+
+    create_table :notifications do |t|
+      t.references :user, foreign_key: true
+      t.integer :recipient_id
+      t.string :action
+      t.string :notifiable_type
+      t.integer :notifiable_id
+
+      t.timestamps
     end
     
     add_index :users, :email,                unique: true

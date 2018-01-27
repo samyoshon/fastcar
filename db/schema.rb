@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171217004744) do
+ActiveRecord::Schema.define(version: 20171214040538) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -106,6 +106,7 @@ ActiveRecord::Schema.define(version: 20171217004744) do
     t.string "country"
     t.float "latitude"
     t.float "longitude"
+    t.string "radius_limit"
     t.index ["car_color_id"], name: "index_proposals_on_car_color_id"
     t.index ["car_make_id"], name: "index_proposals_on_car_make_id"
     t.index ["car_model_id"], name: "index_proposals_on_car_model_id"

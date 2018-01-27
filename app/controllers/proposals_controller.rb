@@ -1,5 +1,5 @@
 class ProposalsController < ApplicationController
-  before_action :authenticate_user!, only: [:new, :create, :edit, :update]
+  before_action :authenticate_user!, only: [:create, :edit, :update]
   before_action :set_proposal, only: [:show, :edit, :update, :destroy]
   # before_action :set_search
   
@@ -17,28 +17,29 @@ class ProposalsController < ApplicationController
     # Dealer sees all proposals for their car make
     if current_user.present? && current_user.dealership_id?
       @q.sorts = ['car_model_id asc', 'price desc'] if @q.sorts.empty?
-      @q.near(address, 20)
-      @proposals = Proposal.where("car_make_id = ?", current_user.dealership.car_make_id)
-      if params[:q].present?
-        # @proposals = @q.result.paginate(page: params[:page], per_page: $pagination_count).where("market_id = ? AND (products.expire_date IS null OR products.expire_date > ?)", @market.id, Time.now)
-        @proposals = @q.result.where("car_make_id = ?", current_user.dealership.car_make_id)
-      end
-      # @q = Proposal.where("car_make_id = ?", current_user.dealership.car_make_id).search(params[:q])
+      @proposals = Proposal.where("car_make_id = ?", current_user.dealership.car_make_id).near([current_user.latitude, current_user.longitude], 20)
+
       # Dealer sees all responses s/he made
       @responses = Response.where("user_id = ?", current_user.id)
 
+      if params[:q].present?
+        @proposals = @q.result.where("car_make_id = ?", current_user.dealership.car_make_id)
+      end
     # Customer sees all proposals s/he made
     elsif current_user.present?
       @q.sorts = ['car_model_id asc', 'price asc'] if @q.sorts.empty?
       @proposals = Proposal.where("user_id = ?", current_user.id)
+
+      # Customer sees all proposals s/he made
+      @responses = Response.all
+      
       # Proposals by customers' car models
       @proposals_nav = Proposal.where("user_id = ?", current_user.id).uniq { |p| p.car_model_id }
+
       if params[:q].present?
         # @proposals = @q.result.paginate(page: params[:page], per_page: $pagination_count).where("market_id = ? AND (products.expire_date IS null OR products.expire_date > ?)", @market.id, Time.now)
         @proposals = @q.result.where("user_id = ?", current_user.id)
       end
-      # Customer sees all proposals s/he made
-      @responses = Response.all
     end
   end
 

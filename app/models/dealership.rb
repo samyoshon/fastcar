@@ -1,5 +1,6 @@
 class Dealership < ApplicationRecord
 	has_many :users
+	belongs_to :car_make, optional: true
 	geocoded_by :address
 	after_validation :geocode, if: :address_changed?
 
